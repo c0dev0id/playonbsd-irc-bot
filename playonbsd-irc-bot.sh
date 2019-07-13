@@ -67,7 +67,7 @@ update_names()
 	for name in $ACTIVE_NAMES; do
 		# sanitize name
 		name="$(echo "$name" | tr -cd "[:alnum:]_-")"
-		if [ -z "$(grep -E "^$name" "$KARMA_FILE")" ] ; then
+		if [ -z "$(grep -E "^$name:" "$KARMA_FILE")" ] ; then
 			echo "$name:0" >> "$KARMA_FILE"
 		fi
 	done
