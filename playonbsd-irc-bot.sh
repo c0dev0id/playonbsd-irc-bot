@@ -67,7 +67,7 @@ update_names()
 	for name in $ACTIVE_NAMES; do
 		# sanitize name
 		name="$(echo "$name" | tr -cd "[:alnum:]_-")"
-		if [ -z "$(grep -E "^$name:" "$KARMA_FILE")" ] ; then
+		if [ -z "$(grep -E "^$name" "$KARMA_FILE")" ] ; then
 			echo "$name:0" >> "$KARMA_FILE"
 		fi
 	done
@@ -169,7 +169,7 @@ EOF
 				echo "[PONG] $line";;
 			*++*) NICK="$(echo "$line" \
 				| grep -Eo "[a-zA-Z0-9_]*\+\+" \
-				| rev | cut -c 3- | rev)"; \
+				| head -1 | rev | cut -c 3- | rev)"; \
 				if [ \( -n "$NICK" \) \
 					-a \( -n "$(grep -E "^$NICK:" "$KARMA_FILE")" \) ] ; \
 				then adjust_karma "$NICK" +1; \
@@ -179,7 +179,7 @@ EOF
 				fi;;
 			*--*) NICK="$(echo "$line" \
 				| grep -Eo "[a-zA-Z0-9_]*\-\-" \
-				| rev | cut -c 3- | rev)"; \
+				| rev | head -1 | cut -c 3- | rev)"; \
 				if [ \( -n "$NICK" \) \
 					-a \( -n "$(grep -E "^$NICK:" "$KARMA_FILE")" \) ] ; \
 				then adjust_karma "$NICK" -1; \
